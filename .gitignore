@@ -1,0 +1,8 @@
+node_modules
+dist
+.turbo
+.expo
+*.local
+.env
+.env.*
+!.env.example

@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "jsx": "react-jsx",
+    "paths": {
+      "@et/ui": ["./packages/ui/src/index.ts"],
+      "@et/api": ["./packages/api/src/index.ts"],
+      "@et/store": ["./packages/store/src/index.ts"],
+      "@et/utils": ["./packages/utils/src/index.ts"]
+    }
+  }
+}

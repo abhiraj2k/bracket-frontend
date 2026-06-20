@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@et/ui": ["../../packages/ui/src/index.ts"],
+      "@et/api": ["../../packages/api/src/index.ts"],
+      "@et/store": ["../../packages/store/src/index.ts"],
+      "@et/utils": ["../../packages/utils/src/index.ts"]
+    }
+  },
+  "include": ["src"]
+}

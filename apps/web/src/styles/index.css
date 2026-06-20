@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply antialiased;
+  }
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface rounded-2xl p-4;
+  }
+  .card-raised {
+    @apply bg-surface-raised rounded-2xl p-4;
+  }
+  .input {
+    @apply w-full bg-surface-raised border border-border rounded-[10px] px-4 py-3
+           text-white placeholder-gray-500 focus:outline-none focus:border-brand
+           transition-colors text-[15px];
+  }
+  .btn-primary {
+    @apply w-full bg-brand hover:bg-brand-dark active:scale-[0.98] text-white
+           font-semibold py-3.5 rounded-xl transition-all text-[15px];
+  }
+  .btn-ghost {
+    @apply w-full text-brand hover:bg-brand/10 active:scale-[0.98]
+           font-semibold py-3.5 rounded-xl transition-all text-[15px];
+  }
+  .btn-destructive {
+    @apply w-full bg-expense/10 hover:bg-expense/20 text-expense
+           font-semibold py-3.5 rounded-xl transition-all text-[15px];
+  }
+  .section-title {
+    @apply text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3;
+  }
+  .amount-expense {
+    @apply text-expense font-semibold;
+  }
+  .amount-income {
+    @apply text-income font-semibold;
+  }
+  .amount-transfer {
+    @apply text-transfer font-semibold;
+  }
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wide;
+  }
+  .badge-ok {
+    @apply badge bg-brand/20 text-brand;
+  }
+  .badge-warning {
+    @apply badge bg-warning/20 text-warning;
+  }
+  .badge-alert {
+    @apply badge bg-expense/20 text-expense;
+  }
+  .badge-milestone {
+    @apply badge bg-income/20 text-income;
+  }
+  .tab-bar {
+    @apply fixed bottom-0 left-0 right-0 bg-surface border-t border-border
+           flex items-center justify-around px-2 pb-safe pt-2 z-50;
+  }
+}
+
+/* safe area for bottom nav */
+.pb-safe {
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+}
+.mb-tab {
+  margin-bottom: 72px;
+}

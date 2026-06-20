@@ -1,0 +1,23 @@
+{
+  "name": "expense-tracker-ui",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev:web": "cd apps/web && node_modules/.bin/vite",
+    "dev:mobile": "pnpm --filter mobile start",
+    "build:web": "pnpm --filter web build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2"
+  },
+  "packageManager": "pnpm@11.7.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  }
+}
