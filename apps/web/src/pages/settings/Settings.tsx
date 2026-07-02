@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router';
 import { useAuthStore } from '@et/store';
 import { useQuery } from '@tanstack/react-query';
 import { usersApi } from '@et/api';
-import { keys } from '../../lib/queryClient';
+import { keys, queryClient } from '../../lib/queryClient';
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -10,6 +10,7 @@ export default function Settings() {
   const { data: me } = useQuery({ queryKey: keys.me, queryFn: usersApi.me });
 
   function logout() {
+    queryClient.clear();
     clearAuth();
     navigate('/login', { replace: true });
   }

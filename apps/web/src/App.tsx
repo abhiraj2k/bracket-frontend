@@ -1,7 +1,8 @@
-import { Routes, Route, Navigate } from 'react-router';
+import { Routes, Route, Navigate, useLocation } from 'react-router';
 import { useAuthStore } from '@et/store';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+import ForgotPassword from './pages/auth/ForgotPassword';
 import AppShell from './components/layout/AppShell';
 import Dashboard from './pages/app/Dashboard';
 import Transactions from './pages/app/Transactions';
@@ -17,7 +18,23 @@ import ImportTransactions from './pages/app/ImportTransactions';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
+  const isExpired = useAuthStore((s) => s.isExpired);
+  const clearAuth = useAuthStore((s) => s.clearAuth);
+  const location = useLocation();
+
+  if (isAuthenticated && isExpired()) {
+    sessionStorage.setItem('returnTo', location.pathname + location.search);
+    clearAuth();
+    window.location.replace('/login?expired=1');
+    return null;
+  }
+
+  if (!isAuthenticated) {
+    sessionStorage.setItem('returnTo', location.pathname + location.search);
+    return <Navigate to="/login" replace />;
+  }
+
+  return <>{children}</>;
 }
 
 function PublicRoute({ children }: { children: React.ReactNode }) {
@@ -30,6 +47,7 @@ export default function App() {
     <Routes>
       <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
       <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+      <Route path="/forgot-password" element={<PublicRoute><ForgotPassword /></PublicRoute>} />
 
       <Route element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
         <Route index element={<Dashboard />} />

@@ -21,7 +21,7 @@ function resolveBaseUrl(): string {
 
 export const apiClient: AxiosInstance = axios.create({
   baseURL: resolveBaseUrl(),
-  headers: { 'Content-Type': 'application/json' },
+  headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '1' },
 });
 
 apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {

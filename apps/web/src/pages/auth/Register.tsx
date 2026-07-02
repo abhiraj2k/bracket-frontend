@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Link, useNavigate } from 'react-router';
 import { useMutation } from '@tanstack/react-query';
+import { GoogleLogin } from '@react-oauth/google';
 import { authApi } from '@et/api';
 import { useAuthStore } from '@et/store';
 
@@ -16,6 +17,9 @@ const schema = z.object({
   path: ['confirmPassword'],
 });
 type Form = z.infer<typeof schema>;
+
+
+const googleEnabled = !!import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 export default function Register() {
   const navigate = useNavigate();
@@ -32,6 +36,15 @@ export default function Register() {
       navigate('/', { replace: true });
     },
   });
+
+  const googleMutation = useMutation({
+    mutationFn: authApi.googleLogin,
+    onSuccess: (data) => {
+      setAuth(data);
+      navigate('/', { replace: true });
+    },
+  });
+
 
   return (
     <div className="min-h-screen bg-[#0F0F13] flex flex-col items-center justify-center px-6">
@@ -70,6 +83,31 @@ export default function Register() {
             {mutation.isPending ? 'Creating account…' : 'Create Account'}
           </button>
         </form>
+
+        {googleEnabled && (
+          <div className="space-y-3">
+            <div className="relative flex items-center">
+              <div className="flex-grow border-t border-border" />
+              <span className="mx-3 text-gray-500 text-xs">or</span>
+              <div className="flex-grow border-t border-border" />
+            </div>
+
+            <div className="flex justify-center">
+              <GoogleLogin
+                onSuccess={(res) => res.credential && googleMutation.mutate({ idToken: res.credential })}
+                onError={() => googleMutation.reset()}
+                width="368"
+                theme="filled_black"
+                shape="rectangular"
+                text="signup_with"
+              />
+            </div>
+
+            {googleMutation.isError && (
+              <p className="text-expense text-sm text-center">Google sign-in failed. Please try again.</p>
+            )}
+          </div>
+        )}
 
         <p className="text-center text-gray-400 text-sm">
           Already have an account?{' '}
